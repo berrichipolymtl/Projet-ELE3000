@@ -121,14 +121,9 @@ void setup() {
   }
 });
 
-  // Start the server
+ 
   server.begin();
   webSocket.begin();
- webSocket.onEvent([](uint8_t num, WStype_t type, uint8_t *payload, size_t length) {
-  // Handle WebSocket events (not used in this example)
-});
-
-
 
   pinMode(23, OUTPUT);
   pinMode(22, INPUT);

@@ -35,13 +35,11 @@ void setup() {
 }
 
 void loop() {
-  // Check if there is a UDP packet available
   int packetSize = udp.parsePacket();
   if (packetSize) {
     char packetBuffer[packetSize];
     udp.read(packetBuffer, packetSize);
 
-    // Parse the JSON message
     StaticJsonDocument<256> doc;
     DeserializationError error = deserializeJson(doc, packetBuffer);
     if (error) {
@@ -49,16 +47,12 @@ void loop() {
       return;
     }
 
-    // Get the device index, wave period, led on time, and led off time from the JSON message
     int device_index = doc["device_index"];
     wave_period = doc["wave_period"];
     led_on_time = doc["led_on_time"];
     led_off_time = doc["led_off_time"];
 
-    // Calculate the delay for this device based on its index
-    int device_delay = wave_period / 8 * device_index;
 
-    // Turn on the LED after the device-specific delay
     digitalWrite(LED_PIN, HIGH);
     delay(led_off_time);
     digitalWrite(LED_PIN, LOW);
